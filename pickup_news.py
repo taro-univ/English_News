@@ -49,7 +49,7 @@ def get_morning_brew() -> Optional[Dict]:
         res = requests.get(url, headers=headers, timeout=10)
         res.raise_for_status()
         soup = BeautifulSoup(res.text, "html.parser")
-        latest_article = soup.find("a", href=True)
+        latest_article = soup.find("h1") or soup.select_one("a[class*='article']")
         
         if latest_article:
             return {
